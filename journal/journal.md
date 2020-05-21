@@ -129,13 +129,12 @@ This is a product which is designed for users to better understand the expressiv
 The sound generated is less of my interest than the interactions which produce them and the feedback resulted. These interactions are focused around the breath and the gestures it contributes to in other areas of the body. The interactions capable with Aeolus are: breathing into the mouthpiece, holding it (preferably at the hand holds) and moving it (preferably from a central pivoting point at the mouth). This simplistic interaction model is designed with the intent that as users experiment more with the instrument, they naturally grow more aware of the movement of the entire body due to the breath and the subtleties which drastically change the sound. Or more simply: to draw attention to the expressivity of breath through sound expression. While the sound generation is a vast world of expression and feedback for the user, I felt that adding visual responses added personability to the instrument itself. Being an instrument which is an extension of the human body, this personability will aid viewers experience a deeper expression from the performer. 
 
 ### Interaction flowchart ###
-<!--- Include an interaction flowchart of the interaction process in your project. Make sure you think about all the stages of interaction step-by-step. Also make sure that you consider actions a user might take that aren't what you intend in an ideal use case. Insert an image of it below. It might just be a photo of a hand-drawn sketch, not a carefully drawn digital diagram. It just needs to be legible. --->
 
-![Image](missingimage.png)
+![InteractiveDiagram](https://user-images.githubusercontent.com/62095800/82579964-e0c99980-9bd1-11ea-9e95-4992122b5f31.jpg)
 
 ## Process documentation ##
 
-# STAGES FROM EARLIER POINTS#
+# STAGES FROM EARLIER POINTS #
 
 ## Physical experimentation documentation ##
 
@@ -213,6 +212,101 @@ Here is the electronic circuit that goes along with this basic code. The video t
 This test was quite useful in seeing the very basic principles in action, no matter how "low quality" the result was. The video which shows this cohesive proof of concept and design is here: https://youtu.be/w1QcQ_9QPm0
 
 
+# Documentation Continued #
+
+## Modelling ##
+
+### Original 3D Model ###
+
+![1](https://user-images.githubusercontent.com/62095800/82579587-5f720700-9bd1-11ea-8913-a3d9543950ef.PNG)
+
+![2](https://user-images.githubusercontent.com/62095800/82579593-60a33400-9bd1-11ea-82aa-3b6b773aa972.PNG)
+
+![3](https://user-images.githubusercontent.com/62095800/82579595-613bca80-9bd1-11ea-8f52-a4f341ffd023.PNG)
+
+These are some perspectives on the original 3D model that was the basis of my original cardboard models.
+
+### New 3D Model ###
+
+![4](https://user-images.githubusercontent.com/62095800/82579596-613bca80-9bd1-11ea-9bf9-25f8660a260c.PNG)
+
+![5](https://user-images.githubusercontent.com/62095800/82579601-61d46100-9bd1-11ea-9b54-0ba1d367f5bb.PNG)
+
+![6](https://user-images.githubusercontent.com/62095800/82579602-626cf780-9bd1-11ea-9084-5bf6a042d4a1.PNG)
+
+Due to the feedback received on my previous iterations, I landed on this as a solution. The people I had interact with the original models felt confused and uncomfortable by the hand holds. Based on their physical reactions, I summised that if the model was wider and the holding positions were at the apex of that width, the shape would fit the contours of the body better. 
+
+### Paper Net of New Model ###
+
+![7](https://user-images.githubusercontent.com/62095800/82579604-626cf780-9bd1-11ea-8e3a-f156437aaa24.jpg)
+
+Let the paper crafts unfortunately begin.
+
+## Technical Testing of Input Methods and Components ##
+
+### Method of Input - Contact Microphone ###
+
+![8](https://user-images.githubusercontent.com/62095800/82579621-6ac53280-9bd1-11ea-9d76-5c91823fe3a9.jpg)
+
+As will be mentioned later on, I had various potential methods of measuring breath and reading it. After some experiementation with a differential pressure sensor, it became clear that it wasn't a viable option. This idea was the second in the list. In essence, the idea was to break apart a contact microphone in order to attach one end of tubing very close to the buzzer element (the piece which vibrates in reaction to loud signals or direct forms of pressure variance). This would, in theory, allow the sensitivity to be lowered so that the only signal would be from the breath entering the tubing. 
+Unfortunately, this method wasn't viable as the breath was incapable of sufficiently and consistently providing signal to the microphone. 
+
+### Arduino Fun ###
+
+![9](https://user-images.githubusercontent.com/62095800/82579631-6ef15000-9bd1-11ea-828f-aafc79d3dc67.jpg)
+
+This is just a showing of one of the many complications that came with this project. Due to a lack of personal resources, I attempted to salvage an arduino compatible board from another project board. As you can see, the pins were mangled and ensured problems later on with proper contact and unusable pins. 
+
+### Simple Test of 1/4" Audio Jack###
+
+![10](https://user-images.githubusercontent.com/62095800/82579635-70227d00-9bd1-11ea-97f1-398097de220e.jpg)
+
+Another salvaged component was a 1/4" female audio jack, it worked mostly fine.
+
+### Method of Input - Fan Input ###
+
+![11](https://user-images.githubusercontent.com/62095800/82579776-a233df00-9bd1-11ea-9d1d-e5d0e9e13e11.jpg)
+
+While I did test this method of breath input previously, this test was conducted with the arduino board. It was found to be compatible
+
+
+## Physical Modelling and Bringing it Together ##
+
+### The Final Cardboard Model ###
+
+![12](https://user-images.githubusercontent.com/62095800/82579818-b081fb00-9bd1-11ea-98bb-8bf4227b8082.jpg)
+
+![13](https://user-images.githubusercontent.com/62095800/82579826-b4ae1880-9bd1-11ea-8abf-f51092f000c8.jpg)
+
+This is the realised cardboard model of the paper net. After being painted, I cut out holes in a pattern and filled them with hot glue. This was to act like frosted acrylic and allow LED light to diffuse but shine through. 
+
+### Installing LEDs and Plugging Everything In ###
+
+![14](https://user-images.githubusercontent.com/62095800/82579838-b8da3600-9bd1-11ea-8b7d-1665866f5373.jpg)
+
+![15](https://user-images.githubusercontent.com/62095800/82579854-bd065380-9bd1-11ea-8be5-eac61e0dc25c.jpg)
+
+![16](https://user-images.githubusercontent.com/62095800/82579871-c1327100-9bd1-11ea-9ade-555486202ce9.jpg)
+
+This process was long and arduous without a soldering iron. During the process of attempting to connect various wires through twisting of contact wires and sealing it with heat shrink tubing, it inevitably created issues in the future on the stability and consistency of the work.
+
+### Deconstruction of Installation ###
+
+![18](https://user-images.githubusercontent.com/62095800/82579882-c55e8e80-9bd1-11ea-82bf-69e89fdd5359.jpg)
+
+After extensive testing and code iterations, my hacknede method of contact was found to be fallable. Because of issues i was having with code in general, a decision was made to cut back on the amount of LEDs used and just try to get one working. 
+
+### Full Deconstruction and Addition of Velcro ###
+
+![19](https://user-images.githubusercontent.com/62095800/82579897-ca234280-9bd1-11ea-8677-2e125a2726e5.jpg)
+
+After the complete deconstruction of the board and LEDs, I constructed a platform by which to attach a velcro strip so that the instrument could be easily opened up from one panel if/when necessary. Additionally, prior to this, I utilised a deconstructed pen to create a kind of structured tubing to direct airflow from the hole (mouth-piece site) towards the fan in such a way that would guarantee that the fan moved. The platform and positioning of the motor and fan was intentional. it's slightly tilted and wedged into the corner so that a tiny amount of the fan blade would graze the edge of the panel. This would create essentially, haptic feedback. 
+
+### Testing of Multiple Boards ###
+
+![20](https://user-images.githubusercontent.com/62095800/82579940-d9a28b80-9bd1-11ea-8c76-d12640f044ac.jpg)
+
+This is after the deconstruction and reconstruction of the board and internal wiring. A problem I consistently had was that the addition of LEDs to the musical code would result in audio LED failure. To try and circumvent this issue, I attempted to take the signal from the arduino board and control the LEDs with the microbit. This eventually resulted in failure.
 
 ## Final code ##
 
