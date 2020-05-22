@@ -310,7 +310,79 @@ This is after the deconstruction and reconstruction of the board and internal wi
 
 ## Final code ##
 
-<!--- Include here screenshots of the final code you used in the project if it is done with block coding. If you have used javascript, micropython, C, or other code, include it as text formatted as code using a series of three backticks ` before and after the code block. See https://guides.github.com/features/mastering-markdown/ for more information about that formatting. --->
+``#include <MozziGuts.h>
+#include <Oscil.h> // oscillator
+#include <tables/cos2048_int8.h> // table for Oscils to play
+#include <AutoMap.h> // maps unpredictable inputs to a range
+
+// desired carrier frequency max and min, for AutoMap
+const int MIN_CARRIER_FREQ = 22;
+const int MAX_CARRIER_FREQ = 440;
+
+// desired intensity max and min, for AutoMap, note they're inverted for reverse dynamics
+const int MIN_INTENSITY = 700;
+const int MAX_INTENSITY = 10;
+
+AutoMap kMapCarrierFreq(0,1023,MIN_CARRIER_FREQ,MAX_CARRIER_FREQ);
+AutoMap kMapIntensity(0,1023,MIN_INTENSITY,MAX_INTENSITY);
+
+const int KNOB_PIN = 7; // set the input for the knob to analog pin 0
+const int LDR_PIN = 7; // set the input for the LDR to analog pin 1
+
+Oscil<COS2048_NUM_CELLS, AUDIO_RATE> aCarrier(COS2048_DATA);
+Oscil<COS2048_NUM_CELLS, AUDIO_RATE> aModulator(COS2048_DATA);
+
+int mod_ratio = 3; // harmonics
+long fm_intensity; // carries control info from updateControl() to updateAudio()
+
+
+void setup(){
+  //Serial.begin(9600); // for Teensy 3.1, beware printout can cause glitches
+  Serial.begin(115200); // set up the Serial output so we can look at the piezo values // set up the Serial output for debugging
+  startMozzi(); // :))
+}
+
+
+void updateControl(){
+  // read the knob
+  int knob_value = mozziAnalogRead(KNOB_PIN); // value is 0-1023
+
+  // map the knob to carrier frequency
+  int carrier_freq = kMapCarrierFreq(knob_value);
+
+  //calculate the modulation frequency to stay in ratio
+  int mod_freq = carrier_freq * mod_ratio;
+
+  // set the FM oscillator frequencies to the calculated values
+  aCarrier.setFreq(carrier_freq);
+  aModulator.setFreq(mod_freq);
+
+  // read the light dependent resistor on the Analog input pin
+  int light_level= mozziAnalogRead(LDR_PIN); // value is 0-1023
+
+  // print the value to the Serial monitor for debugging
+  Serial.print("light_level = ");
+  Serial.print(light_level);
+  Serial.print("\t"); // prints a tab
+
+  fm_intensity = kMapIntensity(light_level);
+
+  Serial.print("fm_intensity = ");
+  Serial.print(fm_intensity);
+  Serial.println(); // print a carraige return for the next line of debugging info
+
+}
+
+
+int updateAudio(){
+  long modulation = fm_intensity * aModulator.next();
+  return aCarrier.phMod(modulation); // phMod does the FM
+}
+
+
+void loop(){
+  audioHook();
+}``
 
 ## Design process discussion ##
 
@@ -322,14 +394,28 @@ Throughout the first half of my instrument design and creation, this means of fe
 
 I take a more holistic approach to design, which I feel, suits the methodology of HCD quite well. It allows a whole picture to be formed as the process continues. 
 
-As mentioned in the previous journalling, I always intented to focus on the modes of feedback in order to build a unique, product. Specifically, my intentions were to have "audio reactive" lighting and input reactive audio which would be designed in a holistic way to approximate the micro forms of feedback achieved through acoustic instruments. This being something rarely, if ever, achieved by electronic musical instruments. I know that not everyone has the context of digital instrumentation, so let me quickly explain why this is unique. Take the clarinet as an acoustic instument powered by breath as an exemplar. Due to the physical principles used to generate sound (acoustic resonance of a pipe with one closed end), a specific mouthpiece, buttons an holes were designed to give a user control of the frequencies and (perhaps unintentionally) allow for sublte variations in timbre. This being controlled in near entirety by air speed, amount and embouchure. Those subtle timbral variances create a high level of personality and instrument-user-audience relationship. In the age of electronic and digital instruments, almost all attempts at a breath controlled musical instrument (not a MIDI controller) try to approximate acoustic instruments and neglect the digital possibilities. Even the examples I included show that nearly all breath controlled musical devices aim to emulate acoustic instruments (like the JamBoxx and Aerophone) or simply utilise the interaction method for MIDI control (like the TEC USB and SynthHacker's DIY MIDI controller). My instrument, however, intended to embrace digital sound generation and become more than a digital "version" of an acoustic instrument.
+As mentioned in the previous journalling, I always intented to focus on the modes of feedback in order to build a unique, product. Specifically, my intentions were to have "audio reactive" lighting and input reactive audio which would be designed in a holistic way to approximate the micro forms of feedback achieved through acoustic instruments. This being something rarely, if ever, achieved by electronic musical instruments. I know that not everyone has the context of digital instrumentation, so let me quickly explain why this is unique. Take the clarinet as an acoustic instument powered by breath as an exemplar. Due to the physical principles used to generate sound (acoustic resonance of a pipe with one closed end), a specific mouthpiece, buttons an holes were designed to give a user control of the frequencies and (perhaps unintentionally) allow for sublte variations in timbre. This being controlled in near entirety by air speed, amount and embouchure. Those subtle timbral variances create a high level of personality and instrument-user-audience relationship. In the age of electronic and digital instruments, almost all attempts at a breath controlled musical instrument (not a MIDI controller) try to approximate acoustic instruments and neglect the digital possibilities. Even the examples I included show that nearly all breath controlled musical devices aim to emulate acoustic instruments (like the JamBoxx and Aerophone) or simply utilise the interaction method for MIDI control (like the TEC USB and SynthHacker's DIY MIDI controller). My instrument, however, intended to embrace digital sound generation and become more than a digital "version" of an acoustic instrument. 
+
 
 ## Reflection ##
 
-<!--- Describe the parts of your project you felt were most successful and the parts that could have done with improvement, whether in terms of outcome, process, or understanding.
+Success is relative. And while I can tell myself that this iteration of *Aeolus* is successful at achieving the core essence of the design intent, I find it a failure in many of the details. The original intent was to have a comprehensive and integrated musical instrument which involved audio reactive LEDs and a more refined musical outcome. This was all to facilitate personality of the product, discoverability and in depth relationship opportunities between the instrument, performer and audience (if any). To be more specific, the design included 12 "frosted windows" which would've diffused light from LEDs. These LEDs were arranged in a colour gradient that would've reacted in brightness to linear increases of range of the fan input. See the *Installing LEDs and Plugging Everything In* section of the documentation images. i.e.
 
-What techniques, approaches, skills, or information did you find useful from other sources (such as the related projects you identified earlier)?
+        *Taking into account the range of input being 0 - 1023. Starting from the top mouthpiece and following the curve line
+        down: 1 - Blue (0 - 250), 2 - Blue(100 - 300), 3 - Blue(150 - 350), 4 - Green(250 - 450), 5 - Green(300 - 550), 
+        6 - Yellow(400 - 650), 7 - Yellow(500 - 700), 8 - Orange(600 - 800), 9 - Orange(700 - 900), 10 - Red(850 - 950), 
+        11 - Red(900 - 1023), 12 - Red(975 - 1023)*
 
-What parts of your project do you feel are novel? This is IMPORTANT to help justify a key component of the assessment rubric.
+This was setup so that as the user blew harder, the LEDs gradually went from blue to red, it becoming more difficult to reach the final LED to parallel the amount of air the user would have to force. While the idea had merit and was novel, interesting and aided both discoverability and feedback, I couldn't get both the audio and visuals to coexist either within the code or wiring. In general, this project presented difficulties at every possible corner. After testing the code with Arduino (I ended up soley working with Arduino IDE and a compatible board) it appeared fine and in working order. As soon as it was transferred to the physical, none of the lights would turn on and the audio suddenly cut. After extensive research and experimentation, I could get some of the LEDs to turn on, but they would not react to the ranges set out or fade (PWM pins were used) or turn off properly. After some time, it became clear that I could not get the LEDs to function as intended and decided that it would be better to get rid of the visual feedback than have defective feedback which would confuse users. There were several more complications with audio reactivity from a single input source with the code. No matter what changes I would implement, nothing significant would change in the results. 
 
-What might be an interesting extension of this project? In what other contexts might this project be used? --->
+I feel that it is important to describe these complications in order to understand why I consider the final product to be a failure of intention. 
+
+Musically, the final sound generation is also a failure. As mentioned previously, the actual sound product isn't much of a concern in this particular project, but the sound's reaction to the interaction was crucial. In the design process discussion I mentioned that the intention was not the emulate the sound of acoustic instuments but to take the principles of subtle and coherent tibral changes based on one variable of embouchure (there are minute variables within changes in embouchure, but from a macro level of the user, it can be considered as a singlular varible). In order to apply these principles, it would require taking the signal from the fan input and manipulating range and scope to utilise in multiple points of modulation. Such as volume, levels of harmonics, blend of different wave shapes and ADSR envelope shape. Just as examples. Every attempt to integrate these controls failed. This is why I consider the audio to be a failure of intent. 
+
+In order to improve upon this project, I feel that some better practices and research be done as to how to achieve an integrated code. Some thoughts on that are to instead of multiple LEDs, utilising a neopixel strip. Instead of attempting to do everything with a single microcontroller, splitting the workload of audio and visuals between two microcontrollers, which I experiemented with in the *Testing of Multiple Boards* documentation. 
+
+
+Novelty is an interesting discussion when it comes to projects and design. There are many different scopes through which you could consider something to be novel or not. For example, my instrument may considered to not be novel because it is an electronic musical instrument, or because it utilises a motor and fan as an input mehtod. On the other hand, I do believe that there are aspects to this project which are novel within the field of electronic wind instruments; such as shape and intention. As mentioned in the design process discussion, most commercial and DIY electronic musical instruments are centered around the sonic emulation of acoustic wind instruments or utilising the breath interaction as a MIDI controller. It is important to point out that a MIDI controller is considered very different to an electronic musical instrument. This is because it only sends values to a patch which either runs a program in real time, or is used to modulate another electronic instrument. Whereas an electronic musical instrument is a self contained, cohesive product that has thought out musical ideas and modulation. This may still include changes to the musical intention, like how the Aerophone can be changed to sound like a cello, tuba or saxophone. When it comes to Aeolus, the intention was never to emulate the sonic qualities of acoustic instruments. To only embrace the electronic sound possibilities (which also negates any comparison to acoustic instruments) but to apply the same principles which allow acoustic instruments to have such subtle variations in timbre, which give them character and complex interactivity.
+
+
+As far as extensions on this project, I have already been cooking up some ideas. I realised that if electronic visuals weren't included, then some other means of visual feedback would be very useful to the overall discoverability and implementation. Some ideas were to make the housing unit expand and contract to the user's breath (similar to how an accordian "breathes" but purely breath controlled). This would also mean that there would be interactivity on the intake of breath, as well as the exhalation.
