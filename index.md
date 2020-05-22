@@ -12,9 +12,12 @@ The image should be inserted with code like that below where you replace the fil
 --->
 ![20200522_015244](https://user-images.githubusercontent.com/62095800/82635918-ba911180-9c44-11ea-9c0d-1f5d3bfa9059.jpg)
 
+
 ![20200522_015544](https://user-images.githubusercontent.com/62095800/82635932-c1b81f80-9c44-11ea-8cf1-5f59e0bc8edc.jpg)
 
-#### Aeolus - An electronic wind instrument for anyone with an intent for musicality or neighbour annoyance. Just plug it into the biggest speaker you can find and blow. ####
+### Aeolus ###
+
+#### An electronic wind instrument for anyone with an intent for musicality or neighbour annoyance. Just plug it into the biggest speaker you can find and blow. ####
 
 ![Aeolus_Finished_Moment](https://user-images.githubusercontent.com/62095800/82635921-bcf36b80-9c44-11ea-8f5d-5a00bf649611.jpg)
 
