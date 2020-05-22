@@ -1,5 +1,5 @@
-# *Insert project title here*
-## *Insert your name here* ##
+# Aeolus #
+## *Tess King* ##
 ## 1701QCA Making Interaction 2020 Final Project ##
 
 <!--- Instructions for the journal will mostly be included as comments, which appear in a block like this that opens with a less than symbol, exclamation mark and three hyphens and closes with three hyphens and a greater than symbol. Make sure you do not include any text you want visible within these symbols or it will not be visible to your instructor. In some cases, such as in headings, there is italicised text included between asterisks that needs to be replaced. --->
@@ -11,17 +11,20 @@
 The image should be inserted with code like that below where you replace the filename to exactly match what you uploaded. This will only work reliably if your filename has no spaces or unusual characters in it. The image must be in .jpg, .gif, .png format. Files of .heic or .heif type will not show up. Note that .png is different to .PNG in a filename here. The names are case sensitive.
 --->
 
-![Image](missingimage.png)
+
+![20200522_015644](https://user-images.githubusercontent.com/62095800/82629897-6aaa4e80-9c34-11ea-881e-3549c14826bd.jpg)
+![20200522_015544](https://user-images.githubusercontent.com/62095800/82629899-6c741200-9c34-11ea-9f7b-3b5b8afab4c8.jpg)
+![20200522_015244](https://user-images.githubusercontent.com/62095800/82629903-6e3dd580-9c34-11ea-9848-9d29f5146a17.jpg)
 
 <!--- PROJECT DESCRIPTION: In a few sentences, describe what the project is and does, who it is for, and a typical use case. This should be suitable for a catalog, poster, or other display material about the project. --->
 
 <!--- SECONDARY IMAGE: Provide some other image that gives a viewer a different perspective on the project such as more about how it functions, the project in use, or something else. This should not just be a different angle of the same object. It should show the project in use if the first image didn't show that, or somehow tell us a different story about the project. --->
 
-![Image](missingimage.png)
+
 
 <!--- PROJECT VIDEO: Provide a still image from your video and a link to the video below. In that code, replace `missingimage.png` with the still from your video and the URL of the video where indicated. If you link to a password protected video, you must include the password in the document you submit through Learning@Griffith. Failing to have a video that we can access might lead to significant reduction in marks, potentially as much as if the video has not been submitted at all. --->
 
-[![Image](missingimage.png)](https://your video address)
+https://youtu.be/TWoj5iyJONs
 
 ### Journal ###
 
