@@ -310,7 +310,8 @@ This is after the deconstruction and reconstruction of the board and internal wi
 
 ## Final code ##
 
-``#include <MozziGuts.h>
+```
+#include <MozziGuts.h>
 #include <Oscil.h> // oscillator
 #include <tables/cos2048_int8.h> // table for Oscils to play
 #include <AutoMap.h> // maps unpredictable inputs to a range
@@ -382,7 +383,8 @@ int updateAudio(){
 
 void loop(){
   audioHook();
-}``
+}
+```
 
 ## Design process discussion ##
 
